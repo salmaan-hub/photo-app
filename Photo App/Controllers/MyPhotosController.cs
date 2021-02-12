@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Photo_App.Models;
 using Microsoft.IdentityModel;
 using Microsoft.AspNetCore.Identity;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace Photo_App.Controllers
 {
@@ -28,6 +28,7 @@ namespace Photo_App.Controllers
         }
 
         // GET: MyPhotos
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return View(await _context.MyPhotos.ToListAsync());
@@ -35,9 +36,10 @@ namespace Photo_App.Controllers
         }
 
         // GET: MyPhotos/Details/5
-        public async Task<IActionResult> Details(string id)
+        [Authorize]
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return NotFound();
             }
@@ -53,16 +55,19 @@ namespace Photo_App.Controllers
         }
 
         // GET: MyPhotos/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
+       
 
         // POST: MyPhotos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Id,PhotoName,ImageFile,Date")] MyPhotos myPhotos)
         {
             if (ModelState.IsValid)
@@ -73,7 +78,7 @@ namespace Photo_App.Controllers
                 myPhotos.PhotoName = fileName = fileName + extensioName;
                 string path = Path.Combine(wwwRootPath + "/Image/", fileName);
                 myPhotos.Url = path;
-                myPhotos.Id = @User.Identity.Name;
+                myPhotos.Email = @User.Identity.Name;
                 using (var fileStream =  new FileStream(path,FileMode.Create)) {
                     await myPhotos.ImageFile.CopyToAsync(fileStream);                }
 
@@ -87,6 +92,7 @@ namespace Photo_App.Controllers
         }
 
         // GET: MyPhotos/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -107,7 +113,8 @@ namespace Photo_App.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,PhotoName,Url,Date")] MyPhotos myPhotos)
+        [Authorize]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,PhotoName,Url,Date")] MyPhotos myPhotos)
         {
             if (id != myPhotos.Id)
             {
@@ -123,14 +130,9 @@ namespace Photo_App.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MyPhotosExists(myPhotos.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
+                    
                         throw;
-                    }
+                    
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -138,9 +140,10 @@ namespace Photo_App.Controllers
         }
 
         // GET: MyPhotos/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        [Authorize]
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return NotFound();
             }
@@ -158,7 +161,8 @@ namespace Photo_App.Controllers
         // POST: MyPhotos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        [Authorize]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var MyPhotos = await _context.MyPhotos.FindAsync(id);
 
@@ -173,7 +177,7 @@ namespace Photo_App.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MyPhotosExists(string id)
+        private bool MyPhotosExists(int id)
         {
             return _context.MyPhotos.Any(e => e.Id == id);
         }

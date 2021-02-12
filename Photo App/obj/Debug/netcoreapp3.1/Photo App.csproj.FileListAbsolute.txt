@@ -227,3 +227,8 @@ C:\Users\NATHI\source\repos\Photo App\Photo App\obj\Debug\netcoreapp3.1\Razor\Vi
 C:\Users\NATHI\source\repos\Photo App\Photo App\obj\Debug\netcoreapp3.1\Razor\Views\MyPhotos\Index.cshtml.g.cs
 C:\Users\NATHI\source\repos\Photo App\Photo App\obj\Debug\netcoreapp3.1\Photo App.csprojAssemblyReference.cache
 C:\Users\NATHI\source\repos\Photo App\Photo App\bin\Debug\netcoreapp3.1\ICSharpCode.SharpZipLib.dll
+C:\Users\NATHI\source\repos\Photo App\Photo App\obj\Debug\netcoreapp3.1\Razor\Views\Shareds\Create.cshtml.g.cs
+C:\Users\NATHI\source\repos\Photo App\Photo App\obj\Debug\netcoreapp3.1\Razor\Views\Shareds\Delete.cshtml.g.cs
+C:\Users\NATHI\source\repos\Photo App\Photo App\obj\Debug\netcoreapp3.1\Razor\Views\Shareds\Details.cshtml.g.cs
+C:\Users\NATHI\source\repos\Photo App\Photo App\obj\Debug\netcoreapp3.1\Razor\Views\Shareds\Edit.cshtml.g.cs
+C:\Users\NATHI\source\repos\Photo App\Photo App\obj\Debug\netcoreapp3.1\Razor\Views\Shareds\Index.cshtml.g.cs

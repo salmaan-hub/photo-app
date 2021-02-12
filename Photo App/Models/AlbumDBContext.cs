@@ -2,6 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
+// Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
+// If you have enabled NRTs for your project, then un-comment the following line:
+// #nullable disable
+
 namespace Photo_App.Models
 {
     public partial class AlbumDBContext : DbContext
@@ -25,7 +29,7 @@ namespace Photo_App.Models
         public virtual DbSet<MyPhotos> MyPhotos { get; set; }
         public virtual DbSet<Shared> Shared { get; set; }
 
-        
+       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -129,14 +133,18 @@ namespace Photo_App.Models
 
             modelBuilder.Entity<MyPhotos>(entity =>
             {
-                entity.Property(e => e.Date).HasColumnType("date");
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.PhotoName)
                     .HasMaxLength(250)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Url)
-                    .HasMaxLength(150)
+                    .HasMaxLength(250)
                     .IsUnicode(false);
             });
 
